@@ -1,6 +1,6 @@
-(ns sn.in-the-mood.short-byte
+(ns sn.birdsong.song
   (:use leipzig.scale, leipzig.melody, leipzig.live, leipzig.chord, leipzig.temperament, leipzig.canon
-        sn.jazz.instruments
+        sn.in-the-mood.instruments
         [overtone.live :only [now]]
         [quil.core :only
          [color clear smooth sketch ellipse frame-rate background
