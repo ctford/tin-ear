@@ -1,4 +1,4 @@
-(ns whelmed.songs.west
+(ns sn.whelmed.songs.west
   (:require
     [leipzig.melody :refer :all]
     [leipzig.live :as live]
@@ -6,7 +6,7 @@
     [leipzig.temperament :as temperament]
     [leipzig.scale :as scale]
     [leipzig.chord :as chord]
-    [whelmed.instrument :refer :all]
+    [sn.whelmed.instrument :refer :all]
     [leipzig.canon :as canon]
     [overtone.live :as overtone]))
 

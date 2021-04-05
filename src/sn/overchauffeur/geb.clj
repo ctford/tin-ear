@@ -1,4 +1,4 @@
-(ns overchauffeur.geb
+(ns sn.overchauffeur.geb
   (:require [overtone.live :refer :all :exclude [stop sharp flat]]
             [leipzig.melody :refer :all]
             [leipzig.canon :refer [canon interval]]
@@ -6,8 +6,8 @@
             [leipzig.live :as live]
             [leipzig.live :refer [stop]]
             [overtone.inst.drum :as drums]
-            [jazz.instruments :as inst]
-            [overchauffeur.coding :as coding]))
+            [sn.jazz.instruments :as inst]
+            [sn.overchauffeur.coding :as coding]))
 
 (def bar-lengths [3.5 3.5 7])
 (def alt-bar-lengths [4 4 8])

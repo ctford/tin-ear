@@ -1,4 +1,4 @@
-(ns seven.instruments
+(ns sn.seven.instruments
   (:use [overtone.core]
         [overtone.samples.piano :only [index-buffer]]))
 

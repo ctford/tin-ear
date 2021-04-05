@@ -1,4 +1,4 @@
-(ns seven.seven
+(ns sn.seven.seven
   (:require [overtone.live :refer :all :exclude [stop sharp flat]]
             [leipzig.canon :refer [canon interval]]
             [leipzig.melody :refer :all]
@@ -6,7 +6,7 @@
             [leipzig.live :as live]
             [leipzig.live :refer [stop]]
             [overtone.inst.drum :as drums]
-            [seven.instruments :as inst]))
+            [sn.seven.instruments :as inst]))
 
 (def part (partial all :part))
 

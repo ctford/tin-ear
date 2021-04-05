@@ -1,5 +1,5 @@
-(ns jazz.standards.in-the-mood
-  (:use leipzig.scale, leipzig.melody, leipzig.chord, leipzig.live jazz.instruments))
+(ns sn.jazz.standards.in-the-mood
+  (:use leipzig.scale, leipzig.melody, leipzig.chord, leipzig.live sn.jazz.instruments))
 
 ; Gracias a Wingy Manone, Andy Razaf y Joe Garland.
 
@@ -23,7 +23,7 @@
                          (-> triad (root 4))
                          (-> triad (inversion 1) (root 7))]))
          (with beat)
-         (where :pitch (comp low B flat major))
+         (where :pitch (comp low C major))
          (tempo (comp (scale [2/3 1/3]) (partial * 2)))
          (tempo (bpm 120)))))
 

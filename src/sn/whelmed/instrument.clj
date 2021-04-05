@@ -1,4 +1,4 @@
-(ns whelmed.instrument
+(ns sn.whelmed.instrument
   (:require
     [leipzig.melody :refer :all]
     [overtone.live :refer :all]
@@ -6,7 +6,7 @@
 
 (def kick2 drums/kick2)
 
-(def kit {:kick kick2 
+(def kit {:kick kick2
           :tick drums/closed-hat,
           :tock drums/open-hat})
 
@@ -16,7 +16,7 @@
 (defonce random-walk (audio-bus))
 (defonce walk (walker random-walk))
 (def resonance (mul-add (in:kr random-walk) 1500 2000))
- 
+
 (defcgen cut-out [input {:default :none}]
   (:ar (let [_ (detect-silence input :action FREE)]
          input))
@@ -123,7 +123,7 @@
         (effects :pan pan :wet wet :room room :volume vol))))
 
 (definst bass [freq 110 dur 1.0 res 1000 volume 1.0 pan 0 wet 0.5 room 0.5]
-  (-> (sin-osc freq) 
+  (-> (sin-osc freq)
       (+ (* 1/3 (sin-osc (* 2 freq))))
       (+ (* 1/2 (sin-osc (* 3 freq))))
       (+ (* 1/3 (sin-osc (* 5 freq))))
@@ -142,7 +142,7 @@
 
 (definst kluck [freq 220 volume 1.0 wet 0.5 room 0.1 pan 0]
   (-> (line:kr freq (* freq 1/2) 0.5)
-      sin-osc 
+      sin-osc
       (+ (sin-osc freq))
       (+ (sin-osc (/ freq 2) (sin-osc 1)))
       (* (env-gen (perc 0.01 0.1)))

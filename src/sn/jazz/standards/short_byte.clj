@@ -1,6 +1,6 @@
-(ns jazz.standards.short-byte
+(ns sn.jazz.standards.short-byte
   (:use leipzig.scale, leipzig.melody, leipzig.live, leipzig.chord, leipzig.temperament, leipzig.canon
-        jazz.instruments
+        sn.jazz.instruments
         [overtone.live :only [now]]
         [quil.core :only
          [color clear smooth sketch ellipse frame-rate background

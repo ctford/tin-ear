@@ -1,4 +1,4 @@
-(ns overchauffeur.coding
+(ns sn.overchauffeur.coding
   (:require [leipzig.melody :refer :all]
             [leipzig.scale :as scale]
             [leipzig.live :as live]
@@ -27,7 +27,7 @@
   (->> n
        char
        str
-       (symbol "overchauffeur.coding")
+       (symbol "sn.overchauffeur.coding")
        find-var
        deref))
 
