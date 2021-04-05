@@ -1,4 +1,4 @@
-(ns sn.jazz.standards.in-the-mood
+(ns sn.jazz.in-the-mood
   (:use leipzig.scale, leipzig.melody, leipzig.chord, leipzig.live sn.jazz.instruments))
 
 ; Gracias a Wingy Manone, Andy Razaf y Joe Garland.

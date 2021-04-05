@@ -1,4 +1,4 @@
-(ns sn.jazz.standards.was-in-the-mood
+(ns sn.jazz.was-in-the-mood
   (:use leipzig.scale, leipzig.melody, leipzig.live, leipzig.chord, leipzig.temperament
         sn.jazz.instruments
         [overtone.live :only [now]]

@@ -1,4 +1,4 @@
-(ns sn.jazz.standards.short-byte
+(ns sn.jazz.short-byte
   (:use leipzig.scale, leipzig.melody, leipzig.live, leipzig.chord, leipzig.temperament, leipzig.canon
         sn.jazz.instruments
         [overtone.live :only [now]]
@@ -29,9 +29,9 @@
         sorta (->> (phrase (repeat 1/4) [0 1 2 0 4 0 4]))]
     (->> bassline
          (where :pitch (comp lower lower))
-         (with #_chords beat #_sigh #_face few #_sorta)
+         (with #_chords beat #_sigh #_face #_few #_sorta)
          ;(with (phrase [14] [0]))
-         (with (mapthen chord [tonic fourth fifth fifth tonic fourth third fifth]))
+         ;(with (mapthen chord [tonic fourth fifth fifth tonic fourth third fifth]))
       (where :pitch (comp A major))
       (tempo (bpm 80))
          )))
