@@ -1,4 +1,4 @@
-(ns sn.jazz.instruments
+(ns sn.in-the-mood.instruments
   (:use [overtone.core]
         [leipzig.live :only [play-note]]
         [overtone.samples.piano :only [index-buffer]]))

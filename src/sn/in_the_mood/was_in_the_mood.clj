@@ -1,6 +1,6 @@
-(ns sn.jazz.was-in-the-mood
+(ns sn.in-the-mood.was-in-the-mood
   (:use leipzig.scale, leipzig.melody, leipzig.live, leipzig.chord, leipzig.temperament
-        sn.jazz.instruments
+        sn.in-the-mood.instruments
         [overtone.live :only [now]]
         [quil.core :only
          [color clear smooth sketch ellipse frame-rate background

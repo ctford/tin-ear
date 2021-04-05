@@ -1,4 +1,4 @@
-(ns sn.jazz.short-byte
+(ns sn.in-the-mood.short-byte
   (:use leipzig.scale, leipzig.melody, leipzig.live, leipzig.chord, leipzig.temperament, leipzig.canon
         sn.jazz.instruments
         [overtone.live :only [now]]
