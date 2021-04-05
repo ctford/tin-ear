@@ -1,4 +1,4 @@
-(ns sn.whelmed.instrument
+(ns sn.west.instruments
   (:require
     [leipzig.melody :refer :all]
     [overtone.live :refer :all]

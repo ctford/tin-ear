@@ -1,4 +1,4 @@
-(ns sn.whelmed.songs.west
+(ns sn.west.song
   (:require
     [leipzig.melody :refer :all]
     [leipzig.live :as live]
@@ -6,7 +6,7 @@
     [leipzig.temperament :as temperament]
     [leipzig.scale :as scale]
     [leipzig.chord :as chord]
-    [sn.whelmed.instrument :refer :all]
+    [sn.west.instruments :refer :all]
     [leipzig.canon :as canon]
     [overtone.live :as overtone]))
 
@@ -84,7 +84,7 @@
  (->>
    a-parting-kiss
    (then like-fairy-floss)
-   (then (times 2 dissolves-on-the-tip-of-my-tongue)) 
+   (then (times 2 dissolves-on-the-tip-of-my-tongue))
    (all :part ::response)))
 
 ; Break
@@ -152,7 +152,7 @@
   I'll get away.
   But my heart will go west with the sun."
 
-  (let [accompaniment (->> backing (with bassline)) 
+  (let [accompaniment (->> backing (with bassline))
         intro (->> backing (then accompaniment))
         call (->> theme (with accompaniment beat) (times 2))
         response (->> reply (with accompaniment beat2) (times 2))
