@@ -1,17 +1,18 @@
 (ns sn.west.song
   (:require
+    [sn.melody :refer :all]
     [leipzig.melody :refer :all]
     [leipzig.live :as live]
     [leipzig.live :refer [stop]]
     [leipzig.temperament :as temperament]
     [leipzig.scale :as scale]
     [leipzig.chord :as chord]
-    [sn.west.instruments :refer :all]
     [leipzig.canon :as canon]
-    [overtone.live :as overtone]))
+    [sn.instruments :refer :all]))
 
 (def progression
-  (map (partial chord/root chord/seventh) [0 (scale/lower 4) (scale/lower 5) (scale/lower 2)]))
+  (->> [0 -3 -2 -5]
+       (map (partial chord/root chord/seventh))))
 
 ; Accompaniment
 (def backing
@@ -22,9 +23,6 @@
       (map vector lefts)
       (mapthen render-chord)
       (all :part ::accompaniment))))
-
-(defn vary [f notes]
-  (->> notes (then (f notes))))
 
 ; Lead
 (def ill-run-away
@@ -184,14 +182,14 @@
         gym gymnopédie-one]
     (->>
       (with
-;       backing
+       backing
        bassline
 ;       light-bass
-;       beat
+       beat
 ;       beat2
 ;       flat-beat
 ;       theme
-;       reply
+       reply
 ;       break
         )
         ;(times 2) (with gym)
@@ -219,8 +217,8 @@
 
 (defmethod live/play-note ::response
   [{freq :pitch seconds :duration}]
-  (-> freq (organ seconds :vol 1.0 :pan -1/4 :wet 0.8))
-  (-> freq (sing seconds :vol 0.02 :pan 1/4 :wet 0.9)))
+  (-> freq (organ seconds :vol 0.5 :pan -1/4 :wet 0.8))
+  (-> freq (sing seconds :volume 2.0 :pan 1/4 :wet 0.9)))
 
 (defmethod live/play-note ::epilogue
   [{freq :pitch seconds :duration}]

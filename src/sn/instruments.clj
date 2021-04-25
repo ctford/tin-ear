@@ -1,6 +1,5 @@
-(ns sn.west.instruments
+(ns sn.instruments
   (:require
-    [leipzig.melody :refer :all]
     [overtone.live :refer :all]
     [overtone.inst.drum :as drums]))
 
@@ -139,14 +138,6 @@
       (lpf 5000)
       (* 1/4 (env-gen (asr 0.03 0.3 0.1) (line:kr 1 0 dur)))
       (effects :room room :mix wet :pan pan :volume volume :high 5000)))
-
-(definst kluck [freq 220 volume 1.0 wet 0.5 room 0.1 pan 0]
-  (-> (line:kr freq (* freq 1/2) 0.5)
-      sin-osc
-      (+ (sin-osc freq))
-      (+ (sin-osc (/ freq 2) (sin-osc 1)))
-      (* (env-gen (perc 0.01 0.1)))
-      (effects :room room :wet wet :pan pan :volume volume)))
 
 (definst tip [freq 110 volume 1.0 wet 0.5 room 0.1 pan 0]
   (-> (brown-noise)
