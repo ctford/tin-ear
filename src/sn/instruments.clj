@@ -143,5 +143,5 @@
   (-> (brown-noise)
       (+ (sin-osc (* 1/4 freq)))
       (rlpf (* 3 freq) 1/2)
-      (* (env-gen (perc 0.01 0.05)))
+      (* (env-gen (perc 0.04 0.05)))
       (effects :room room :wet wet :pan pan :volume volume)))

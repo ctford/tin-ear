@@ -22,45 +22,30 @@
       progression
       (map vector lefts)
       (mapthen render-chord)
-      (all :part ::accompaniment))))
-
-; Lead
-(def ill-run-away
-  (->>
-    (after -1/2
-           (phrase
-             [1/2 1/4 1/4 1/2 3]
-             [  3   4   3   4 nil]))
-    (vary (partial but 1/4 1/2 (phrase [1/4] [6])))))
-
-(def my-heart-will-go-west-with-the-sun
-  (->> (phrase
-         [1/2 3/4 3/4 2/4 3/4 3/4 1/4 17/4]
-         [  3   4   3   2   4   3   2   -1])
-       (after -1/2)))
-
-(def west-with-the-west-with-the
-  (->> (after -1/2 (phrase [1/2] [3]))
-       (then (times 4 (phrase [3/4 3/4 2/4] [4 3 2])))))
+      (part ::accompaniment))))
 
 (def theme
-  (->>
-    ill-run-away
-    (then my-heart-will-go-west-with-the-sun)
-    (all :part ::lead)))
-
-(def spilling-theme
-  (->>
-    ill-run-away
-    (then west-with-the-west-with-the)
-    (all :part ::lead)))
+  (let [ill-run-away (->>
+                       (after -1/2
+                              (phrase
+                                [1/2 1/4 1/4 1/2 3]
+                                [  3   4   3   4 nil]))
+                       (vary (partial but 1/4 1/2 (phrase [1/4] [6]))))     
+        my-heart-will-go-west-with-the-sun (->> (phrase
+                                                  [1/2 3/4 3/4 2/4 3/4 3/4 1/4 17/4]
+                                                  [  3   4   3   2   4   3   2   -1])
+                                                (after -1/2))]
+    (->>
+      ill-run-away
+      (then my-heart-will-go-west-with-the-sun)
+      (part ::lead))))
 
 (def gymnopédie-one
   (->>
     (phrase (cycle [3/2 3/2 2/2]) [nil 4 6 5 4 1 0 1 2])
     (then (phrase (repeat 4) [-1 0 4 5 4]))
     (where :pitch scale/lower)
-    (all :part ::epilogue)))
+    (part ::epilogue)))
 
 ; Response
 (def a-parting-kiss
@@ -83,7 +68,7 @@
    a-parting-kiss
    (then like-fairy-floss)
    (then (times 2 dissolves-on-the-tip-of-my-tongue))
-   (all :part ::response)))
+   (part ::response)))
 
 ; Break
 (def consider-this
@@ -108,15 +93,15 @@
    consider-this
    (then consider-that)
    (then consider-everything)
-   (all :part ::break)))
+   (part ::break)))
 
 ; Bass
 (def light-bass
   (->> progression
-       (map :i progression)
+       (map :i)
        (phrase (repeat 4))
        (where :pitch scale/lower)
-       (all :part ::bass)))
+       (part ::bass)))
 
 (def bassline
   (->> light-bass
@@ -126,70 +111,49 @@
                (partial where :duration dec)
                (partial all :left? true)))))
 
+(def back-beat
+  (->> (phrase (repeat 4 1) (cycle [nil 0]))
+       (times 4)
+       (all :drum :pop)
+       (part :beat)))
+
 (def beat
-  (->> (times 4 (phrase [6/4 4/4 6/4] (repeat -14)))
-       (with (times 2 (phrase [1 2 2 2 1/2 1/2] (cons nil (repeat -10)))))
-       (all :part ::kick)))
+  (->> (phrase [6/4 4/4 6/4] (repeat -14))
+       (times 4)
+       (with (times 2 (phrase [1 2 2 2 1/2 1/2] [nil -10 -10 -10 -10 -13])))
+       (all :drum :kick)
+       (part :beat)))
 
 (def flat-beat
   (->> (phrase (repeat 4 1) (repeat -14))
        (times 4)
-       (all :part ::kick)))
+       (part :beat)
+       (all :drum :kick)))
 
 (def beat2
   (->> (phrase [1 1 1/4 3/4 1 1/4 1/4 1/2 1/2 1/4 1/4 1 1/2] (cycle [-7 -3]))
        (with (after 4 (phrase [3/2 3/2 1] [-8 -10 -12])))
        (times 2)
        (with beat)
-       (all :part ::kick)))
-
-; Body
-(def west-with-the-sun
-
-  "I'll run away.
-  I'll get away.
-  But my heart will go west with the sun."
-
-  (let [accompaniment (->> backing (with bassline))
-        intro (->> backing (then accompaniment))
-        call (->> theme (with accompaniment beat) (times 2))
-        response (->> reply (with accompaniment beat2) (times 2))
-        variation (->> theme (then spilling-theme)
-                       (with (->> (with beat accompaniment) (times 2))))
-        outro (after 4 (with gymnopédie-one (->> (with accompaniment beat) (then bassline))))]
-    (->>
-      intro
-      (then call)
-      (then response)
-      (then (->> break (with light-bass flat-beat) (times 2)
-                 (with (->> backing (after 16)))))
-      (then variation)
-      (then (->> response (with (->> break (after 16)))))
-      (then outro)
-      (where :pitch (comp temperament/equal scale/A scale/minor))
-      (tempo (bpm 80))
-      #_(with [{:time 0 :duration 0 :part ::vocals}]))))
+       (part :beat)
+       (all :drum :kick)))
 
 (def west
-
   "I'll run away.
   I'll get away.
   But my heart will go west with the sun."
-
-  (let [
-        variation (->> theme (then spilling-theme)
-                       (with (->> (with beat backing bassline) (times 2))))
-        gym gymnopédie-one]
+  (let [gym gymnopédie-one]
     (->>
       (with
-       backing
-       bassline
-;       light-bass
-       beat
+;       backing
+;       bassline
+       light-bass
+;       back-beat
+;       beat
 ;       beat2
 ;       flat-beat
 ;       theme
-       reply
+;       reply
 ;       break
         )
         ;(times 2) (with gym)
@@ -229,6 +193,10 @@
   (-> freq (/ 2) (bell :duration 7 :vol 0.5 :position -1/5 :wet 0.6))
   (-> freq (bell :duration 7 :vol 1.5 :position -1/6 :wet 0.6)))
 
-(defmethod live/play-note ::kick
-  [{freq :pitch}]
-  (-> freq (kick2 :amp 0.4)))
+(def percussion
+  {:kick (fn [freq] (kick2 freq :amp 0.8 :sustain 1.2))
+   :pop (fn [freq] (tip freq :volume 1.0))})
+
+(defmethod live/play-note :beat
+  [{freq :pitch drum :drum}]
+  ((drum percussion) freq))
