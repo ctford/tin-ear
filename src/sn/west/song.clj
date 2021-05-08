@@ -30,7 +30,7 @@
                               (phrase
                                 [1/2 1/4 1/4 1/2 3]
                                 [  3   4   3   4 nil]))
-                       (vary (partial but 1/4 1/2 (phrase [1/4] [6]))))     
+                       (vary (partial but 1/4 1/2 (phrase [1/4] [6]))))
         my-heart-will-go-west-with-the-sun (->> (phrase
                                                   [1/2 3/4 3/4 2/4 3/4 3/4 1/4 17/4]
                                                   [  3   4   3   2   4   3   2   -1])
@@ -139,41 +139,42 @@
        (part :beat)
        (all :drum :kick)))
 
-(def west
+(def west-with-the-sun
   "I'll run away.
   I'll get away.
   But my heart will go west with the sun."
   (let [roots [0 -3 -2 -5]]
     (->>
       (phrase (repeat 4) roots)
-      (where :pitch raise)
+      ;(where :pitch lower)
+      #_(canon (fn [notes]
+                 (->> notes
+                      (where :pitch (partial + 6))
+                      (all :left? true)
+                      (where :duration dec)
+                      (where :time inc))))
       (part ::bass)
       (with
-        ;       backing
-        ;       bassline
-        ;       light-bass
-        ;       back-beat
-        ;       beat
-        ;       beat2
-        ;       flat-beat
-        ;       theme
-        ;       reply
-        ;       break
+        ;backing
+        ;back-beat
+        ;beat
+        ;theme
+        ;reply beat2
+        ;break flat-beat
         )
       ;(times 2) (with gym)
       (where :pitch (comp equal A minor))
       (tempo (bpm 80)))))
 
 (comment
-  (do (stop) (->> west var jam))
-  (->> west-with-the-sun play)
+  (do (stop) (->> west-with-the-sun var jam))
 )
 
 ; Arrangement
 (defmethod live/play-note ::bass
   [{freq :pitch left? :left?}]
   (let [[position low] (if left? [-1/3 0.3] [1/5 2])]
-    (-> freq (groan :volume 0.5 :position position :wet 0.3 :low low :limit 3000))))
+    (-> freq (groan :volume 0.5 :position position :wet 0.1 :low low :limit 3000))))
 
 (defmethod live/play-note ::accompaniment
   [{freq :pitch left? :left?}]
@@ -190,7 +191,7 @@
 
 (defmethod live/play-note ::epilogue
   [{freq :pitch seconds :duration}]
-  (-> freq (corgan seconds :vol 0.4 :pan 1/2 :wet 0.5 :vibrato 80/60 :room 0.9)))
+  (-> freq (corgan seconds :vol 0.8 :pan 1/2 :wet 0.5 :vibrato 80/60 :room 0.9)))
 
 (defmethod live/play-note ::break
   [{freq :pitch}]
