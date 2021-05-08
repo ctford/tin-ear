@@ -199,8 +199,8 @@
   (-> freq (bell :duration 7 :vol 1.5 :position -1/6 :wet 0.6)))
 
 (def percussion
-  {:kick (fn [freq] (kick2 freq :amp 0.8 :sustain 1.2))
-   :pop (fn [freq] (tip freq :volume 1.0))})
+  {:kick (fn [freq] (kick2 freq :amp 0.8 :sustain 1.2 :pan -0.3))
+   :pop (fn [freq] (tip freq :volume 0.8 :wet 0.6 :room 0.8 :pan 0.3))})
 
 (defmethod live/play-note :beat
   [{freq :pitch drum :drum}]

@@ -142,6 +142,6 @@
 (definst tip [freq 110 volume 1.0 wet 0.5 room 0.1 pan 0]
   (-> (brown-noise)
       (+ (sin-osc (* 1/4 freq)))
-      (rlpf (* 3 freq) 1/2)
-      (* (env-gen (perc 0.04 0.05)))
+      (rlpf (* 1 freq) 0.05)
+      (* (env-gen (perc 0.04 0.25)))
       (effects :room room :wet wet :pan pan :volume volume)))
