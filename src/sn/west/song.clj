@@ -2,17 +2,17 @@
   (:require
     [sn.melody :refer :all]
     [leipzig.melody :refer :all]
-    [leipzig.live :as live]
-    [leipzig.live :refer [stop]]
-    [leipzig.temperament :as temperament]
-    [leipzig.scale :as scale]
-    [leipzig.chord :as chord]
-    [leipzig.canon :as canon]
+    [leipzig.live :refer :all]
+    [leipzig.live :refer :all]
+    [leipzig.temperament :refer :all]
+    [leipzig.scale :refer :all]
+    [leipzig.chord :refer :all]
+    [leipzig.canon :refer :all]
     [sn.instruments :refer :all]))
 
 (def progression
   (->> [0 -3 -2 -5]
-       (map (partial chord/root chord/seventh))))
+       (map (partial root seventh))))
 
 ; Accompaniment
 (def backing
@@ -40,11 +40,12 @@
       (then my-heart-will-go-west-with-the-sun)
       (part ::lead))))
 
-(def gymnopédie-one
+(def gym
+  "Gymnopédie One"
   (->>
     (phrase (cycle [3/2 3/2 2/2]) [nil 4 6 5 4 1 0 1 2])
     (then (phrase (repeat 4) [-1 0 4 5 4]))
-    (where :pitch scale/lower)
+    (where :pitch lower)
     (part ::epilogue)))
 
 ; Response
@@ -100,14 +101,14 @@
   (->> progression
        (map :i)
        (phrase (repeat 4))
-       (where :pitch scale/lower)
+       (where :pitch lower)
        (part ::bass)))
 
 (def bassline
   (->> light-bass
-       (canon/canon
-         (comp (canon/simple 1)
-               (canon/interval 6)
+       (canon
+         (comp (simple 1)
+               (interval 6)
                (partial where :duration dec)
                (partial all :left? true)))))
 
@@ -142,27 +143,30 @@
   "I'll run away.
   I'll get away.
   But my heart will go west with the sun."
-  (let [gym gymnopédie-one]
+  (let [roots [0 -3 -2 -5]]
     (->>
+      (phrase (repeat 4) roots)
+      (where :pitch raise)
+      (part ::bass)
       (with
-;       backing
-;       bassline
-       light-bass
-;       back-beat
-;       beat
-;       beat2
-;       flat-beat
-;       theme
-;       reply
-;       break
+        ;       backing
+        ;       bassline
+        ;       light-bass
+        ;       back-beat
+        ;       beat
+        ;       beat2
+        ;       flat-beat
+        ;       theme
+        ;       reply
+        ;       break
         )
-        ;(times 2) (with gym)
-      (where :pitch (comp temperament/equal scale/A scale/minor))
+      ;(times 2) (with gym)
+      (where :pitch (comp equal A minor))
       (tempo (bpm 80)))))
 
 (comment
-  (do (stop) (->> west var live/jam))
-  (->> west-with-the-sun live/play)
+  (do (stop) (->> west var jam))
+  (->> west-with-the-sun play)
 )
 
 ; Arrangement
