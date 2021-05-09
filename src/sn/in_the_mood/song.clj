@@ -29,4 +29,5 @@
 
 (comment
   (do (stop) (-> in-the-mood var jam))
+  (def in-the-mood nil)
   )
