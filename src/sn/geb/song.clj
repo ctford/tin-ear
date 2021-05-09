@@ -9,7 +9,7 @@
             [sn.in-the-mood.instruments :as inst]
             [sn.geb.coding :as coding]))
 
-(def bar-lengths [3.5 3.5 7])
+(def bar-lengths [7/2 7/2 14/2])
 (def alt-bar-lengths [4 4 8])
 (def progression [-2 -1 0 0])
 
@@ -23,7 +23,7 @@
         twiddle (phrase (repeat 64 1/4) (cycle [4 2 5 4 5 4 7 7]))
         bomp (phrase (repeat 32 1/2) (cycle [4 2 2 0 -1]))
         decoration (phrase (repeat 64 1/4) (cycle [7 8 9 11 7 6]))
-        together (with #_alt-bass rising twiddle bomp)]
+        together (with alt-bass #_rising twiddle bomp)]
     (->> together
          (then (with together decoration)))))
 
@@ -51,37 +51,29 @@
         beat (->> (phrase [1 1 0.5 0.5 0.5] (repeat -21))
                   (having :part [:kick :snare :clap :kick :snare])
                   (times 4))
+        single-canon (partial canon ascii)
+        double-canon (partial canon #(->> % ascii (canon person)))
         steady (->> (phrase (repeat 28 1/2) (repeat 0))
                     (all :part :click))
         flat (->> (phrase (repeat 14 1) (repeat -21))
                   (having :part (repeat :kick)))]
     (->> []
-         (with bass riff)
+         ;(with bass #_riff)
          ;(with whirl #_hit)
-         (with #_beat steady #_flat)
-         (times 2)
+         ;(with #_beat steady #_flat)
+         ;(times 2)
          ;(with alt)
          (where :pitch (comp B minor))
-         (with (->> "GEB"
-                    (map coding/char->ascii)
-                    (phrase bar-lengths)
-                    ;(canon ascii)
-                    (canon #(->> % ascii (canon person)))
-                    (times 2)))
-         (tempo (bpm 90)))))
+         (with
+           (->> (map coding/char->ascii "GEB")
+                (phrase [7/2 7/2 14/2])
+                ))
+         (tempo (bpm 100)))))
 
 (comment
   (volume 0.9)
   (do (stop) (-> geb var live/jam))
   (def geb nil))
-
-(comment
-  (map fx-chorus [0 1])
-  (map fx-distortion [0 1] [2 2] [0.18 0.14])
-
-  (do (recording-start "geb.aiff")
-      (live/play geb))
-  (recording-stop))
 
 ; Instrumentation
 (defonce x
@@ -89,7 +81,7 @@
     (out:kr out-bus (lf-noise1:kr freq))))
 (defonce random-walk (audio-bus))
 (defonce walk (walker random-walk :freq (* 1/7 0.75)))
-(def resonance (mul-add (in:kr random-walk) 2500 3000))
+(def resonance (mul-add (in:kr random-walk) 1500 3000))
 
 (definst overchauffeur [freq 110 dur 1.0 top 1500 vol 0.25]
   (let [inst (-> (sin-osc freq)
@@ -112,7 +104,7 @@
 
 (defmethod live/play-note :default
   [{midi :pitch seconds :duration}]
-  (some-> midi midi->hz (overchauffeur seconds)))
+  (some-> midi midi->hz (overchauffeur seconds :vol 0.4)))
 
 #_(defmethod live/play-note :default
   [{midi :pitch seconds :duration}]
@@ -132,11 +124,8 @@
 
 (defmethod live/play-note :click
   [{midi :pitch seconds :duration}]
-  (drums/closed-hat :amp 0.9))
-
-(defmethod live/play-note :clack
-  [{midi :pitch seconds :duration}]
-  (drums/closed-hat :amp 1.9 :t 0.01))
+  (some-> midi midi->hz (drums/haziti-clap :amp 0.8))
+  (drums/open-hat :amp 0.7 :t 0.03))
 
 (defonce godel (sample "samples/goedel.aiff"))
 (defonce escher (sample "samples/escher.aiff"))
