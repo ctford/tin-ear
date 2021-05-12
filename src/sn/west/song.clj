@@ -3,7 +3,6 @@
     [sn.melody :refer :all]
     [leipzig.melody :refer :all]
     [leipzig.live :refer :all]
-    [leipzig.live :refer :all]
     [leipzig.temperament :refer :all]
     [leipzig.scale :refer :all]
     [leipzig.chord :refer :all]
@@ -171,29 +170,29 @@
 )
 
 ; Arrangement
-(defmethod live/play-note ::bass
+(defmethod play-note ::bass
   [{freq :pitch left? :left?}]
   (let [[position low] (if left? [-1/3 0.3] [1/5 2])]
     (-> freq (groan :volume 0.5 :position position :wet 0.1 :low low :limit 3000))))
 
-(defmethod live/play-note ::accompaniment
+(defmethod play-note ::accompaniment
   [{freq :pitch left? :left?}]
   (-> freq (shudder :volume 1 :pan (if left? 1/2 -1/2) :wet 0.8 :limit 6000)))
 
-(defmethod live/play-note ::lead
+(defmethod play-note ::lead
   [{freq :pitch}]
   (-> freq (sawish :pan -1/6 :vibrato 8/3 :wet 0.6 :volume 0.7)))
 
-(defmethod live/play-note ::response
+(defmethod play-note ::response
   [{freq :pitch seconds :duration}]
   (-> freq (organ seconds :vol 0.5 :pan -1/4 :wet 0.8))
   (-> freq (sing seconds :volume 2.0 :pan 1/4 :wet 0.9)))
 
-(defmethod live/play-note ::epilogue
+(defmethod play-note ::epilogue
   [{freq :pitch seconds :duration}]
   (-> freq (corgan seconds :vol 0.8 :pan 1/2 :wet 0.5 :vibrato 80/60 :room 0.9)))
 
-(defmethod live/play-note ::break
+(defmethod play-note ::break
   [{freq :pitch}]
   (-> freq (/ 2) (bell :duration 7 :vol 0.5 :position -1/5 :wet 0.6))
   (-> freq (bell :duration 7 :vol 1.5 :position -1/6 :wet 0.6)))
@@ -202,6 +201,6 @@
   {:kick (fn [freq] (kick2 freq :amp 0.8 :sustain 1.2 :pan -0.3))
    :pop (fn [freq] (tip freq :volume 0.8 :wet 0.6 :room 0.8 :pan 0.3))})
 
-(defmethod live/play-note :beat
+(defmethod play-note :beat
   [{freq :pitch drum :drum}]
   ((drum percussion) freq))
