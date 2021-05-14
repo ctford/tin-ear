@@ -142,22 +142,13 @@
   "I'll run away.
   I'll get away.
   But my heart will go west with the sun."
-  (let [roots [0 -3 -2 -5]]
+  (let [progression [0 (lower 4) (lower 5) (lower 2)]]
     (->>
-      (phrase (repeat 4) roots)
-      ;(where :pitch lower)
-      #_(canon (fn [notes]
-                 (->> notes
-                      (where :pitch (partial + 6))
-                      (all :left? true)
-                      (where :duration dec)
-                      (where :time inc))))
+      (phrase (repeat 4) progression)
       (part ::bass)
       (with
         ;backing
-        ;back-beat
-        ;beat
-        ;theme
+        ;beat theme ;back-beat
         ;reply beat2
         ;break flat-beat
         )
