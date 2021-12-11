@@ -5,8 +5,7 @@
             [leipzig.scale :refer [high low raise lower sharp flat E B G minor major from]]
             [leipzig.live :as live]
             [leipzig.live :refer [stop]]
-            [overtone.inst.drum :as drums]
-            [sn.seven.instruments :as inst]))
+            [overtone.inst.drum :as drums]))
 
 (def part (partial all :part))
 
@@ -67,10 +66,10 @@
               [0 0 2 0 -1 -2 -3 -1])
       (where :pitch lower)
       (part :riff)
-      ;(times 4)
-      ;(with nation-army)
-      ;(with bass beat)
-      ;(with sweet dreams)
+      (times 4)
+      (with nation-army)
+      (with bass beat)
+      (with #_sweet #_dreams)
       ;(then rise)
       (where :pitch (comp G minor))
       (tempo (bpm 120)))))
