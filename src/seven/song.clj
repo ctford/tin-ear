@@ -1,4 +1,4 @@
-(ns sn.seven.song
+(ns seven.song
   (:require [overtone.live :refer :all :exclude [stop sharp flat]]
             [leipzig.canon :refer [canon interval]]
             [leipzig.melody :refer :all]
