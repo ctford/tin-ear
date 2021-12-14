@@ -87,12 +87,13 @@
   (defsynth walker [out-bus 0 freq 0.5]
     (out:kr out-bus (lf-noise1:kr freq))))
 (defonce random-walk (audio-bus))
-(defonce walk (walker random-walk :freq (* 1/7 0.75)))
-(def resonance (mul-add (in:kr random-walk) 1500 3000))
+(defonce walk (walker random-walk :freq 2))
+(def resonance (mul-add (in:kr random-walk) 100 3000))
 
 (definst sweetar [freq 110 dur 1.0 boost 5 vol 0.25 pan 0.0]
   (let [inst (-> (sin-osc freq)
-                 (+ (* 4 (sin-osc (* 0.999 freq))))
+                 (+ (* 3 (sin-osc (* 0.999 freq))))
+                 (+ (* 1 (sin-osc (* 1.005 freq))))
                  (+ (* 1 (sin-osc (* 1.5 freq))))
                  (+ (* 2 (sin-osc (* 4.003 freq))))
                  (+ (* 2 (sin-osc (* 0.501 freq))))
