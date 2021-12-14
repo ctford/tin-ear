@@ -34,9 +34,9 @@
                          (then (silence 8))
                          (times 2)
                          (part :melody))
-        rise (->> (reps [8 [-2 2 5]] [8 [-1 3 6]])
+        rise (->> (reps [8 [-5 -1 2]] [8 [-4 0 3]])
                   (phrase (repeat 16 0.5))
-                  (with (phrase [4 4] [[-9 -2] [-8 -1]]))
+                  (with (phrase [4 4] [[-12 -5] [-11 -4]]))
                   (where :pitch lower)
                   (part :riff))
         sweet (->> [0 0 [0 7] 0
@@ -70,7 +70,7 @@
       (with nation-army)
       (with bass beat)
       (with #_sweet #_dreams)
-      ;(then rise)
+      (then rise)
       (where :pitch (comp G minor))
       (tempo (bpm 120)))))
 
