@@ -1,11 +1,8 @@
 (ns sn.birdsong.song
   (:use leipzig.scale, leipzig.melody, leipzig.live, leipzig.chord, leipzig.temperament, leipzig.canon
-        sn.birdsong.instruments
         [overtone.live :only [now]]
         [overtone.inst.drum :as drums]
-        [quil.core :only
-         [color clear smooth sketch ellipse frame-rate background
-          width height stroke stroke-weight fill screen-height screen-width]]))
+        [overtone.inst.piano :only [piano]]))
 
 (def tonic triad)
 (def third (-> triad (root 2) (inversion 2)))
@@ -45,15 +42,19 @@
 
 (defmethod play-note :default
   [{midi :pitch, seconds :duration}]
-  (piano midi :duration seconds))
+  (-> midi
+      (+ 0.00001) ; Avoid a bug where a C is played as a B due to rounding.
+      (piano :sustain 0 :release 0 :decay 0)))
 
 (defmethod play-note :bass
   [{midi :pitch, seconds :duration}]
-  (piano midi :duration seconds))
+  (-> midi
+      (+ 0.00001) ; Avoid a bug where a C is played as a B due to rounding.
+      (piano :sustain 0 :release 0 :decay 0)))
 
 (defmethod play-note :beat
   [_]
-  (hat))
+  (drums/closed-hat2))
 
 (defmethod play-note :kick
   [_]
