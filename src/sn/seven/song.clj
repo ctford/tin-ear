@@ -1,4 +1,4 @@
-(ns seven.song
+(ns sn.seven.song
   (:require [overtone.live :refer :all :exclude [stop sharp flat]]
             [leipzig.canon :refer [canon interval]]
             [leipzig.melody :refer :all]
@@ -34,9 +34,9 @@
                          (then (silence 8))
                          (times 2)
                          (part :melody))
-        rise (->> (reps [8 [-5 -1 2]] [8 [-4 0 3]])
+        rise (->> (reps [8 [-2 2 5]] [8 [-1 3 6]])
                   (phrase (repeat 16 0.5))
-                  (with (phrase [4 4] [[-12 -5] [-11 -4]]))
+                  (with (phrase [4 4] [[-9 -2] [-8 -1]]))
                   (where :pitch lower)
                   (part :riff))
         sweet (->> [0 0 [0 7] 0
@@ -66,11 +66,11 @@
               [0 0 2 0 -1 -2 -3 -1])
       (where :pitch lower)
       (part :riff)
-      (times 4)
-      (with nation-army)
-      (with bass beat)
-      (with #_sweet #_dreams)
-      (then rise)
+      ;(times 4)
+      ;(with nation-army)
+      ;(with bass beat)
+      ;(with sweet dreams)
+      ;(then rise)
       (where :pitch (comp G minor))
       (tempo (bpm 120)))))
 
@@ -87,13 +87,12 @@
   (defsynth walker [out-bus 0 freq 0.5]
     (out:kr out-bus (lf-noise1:kr freq))))
 (defonce random-walk (audio-bus))
-(defonce walk (walker random-walk :freq 2))
-(def resonance (mul-add (in:kr random-walk) 100 3000))
+(defonce walk (walker random-walk :freq (* 1/7 0.75)))
+(def resonance (mul-add (in:kr random-walk) 1500 3000))
 
 (definst sweetar [freq 110 dur 1.0 boost 5 vol 0.25 pan 0.0]
   (let [inst (-> (sin-osc freq)
-                 (+ (* 3 (sin-osc (* 0.999 freq))))
-                 (+ (* 1 (sin-osc (* 1.005 freq))))
+                 (+ (* 4 (sin-osc (* 0.999 freq))))
                  (+ (* 1 (sin-osc (* 1.5 freq))))
                  (+ (* 2 (sin-osc (* 4.003 freq))))
                  (+ (* 2 (sin-osc (* 0.501 freq))))
