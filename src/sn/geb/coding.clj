@@ -1,9 +1,6 @@
 (ns sn.geb.coding
   (:require [leipzig.melody :refer :all]
-            [leipzig.scale :as scale]
-            [leipzig.live :as live]
-            [leipzig.chord :as chord]
-            [leipzig.temperament :as temperament]))
+            [leipzig.scale :as scale]))
 
 (defmacro defs [names values]
   `(do

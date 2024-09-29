@@ -6,7 +6,6 @@
             [leipzig.live :as live]
             [leipzig.live :refer [stop]]
             [overtone.inst.drum :as drums]
-            [sn.in-the-mood.instruments :as inst]
             [sn.geb.coding :as coding]))
 
 (def bar-lengths [7/2 7/2 14/2])
@@ -107,8 +106,10 @@
   (some-> midi midi->hz (overchauffeur seconds :vol 0.4)))
 
 #_(defmethod live/play-note :default
-  [{midi :pitch seconds :duration}]
-  (some-> midi (inst/piano :duration seconds)))
+    [{midi :pitch seconds :duration}]
+    (-> midi
+        (+ 0.00001) ; Avoid a bug where a C is played as a B due to rounding.
+        (piano :sustain 0 :release 0 :decay 0)))
 
 (defmethod live/play-note :kick
   [{midi :pitch seconds :duration}]
@@ -127,9 +128,20 @@
   (some-> midi midi->hz (drums/haziti-clap :amp 0.8))
   (drums/open-hat :amp 0.7 :t 0.03))
 
-(defonce godel (sample "samples/goedel.aiff"))
-(defonce escher (sample "samples/escher.aiff"))
-(defonce bach (sample "samples/bach.aiff"))
+(definst godel []
+  (let [pan -1.0
+        buffer (load-sample "samples/goedel.aiff")]
+    (pan2 (play-buf 1 buffer :action FREE :rate 0.5) pan)))
+
+(definst escher []
+  (let [pan 1.0
+        buffer (load-sample "samples/escher.aiff")]
+    (pan2 (play-buf 1 buffer :action FREE :rate 0.5) pan)))
+
+(definst bach []
+  (let [pan 0.0
+        buffer (load-sample "samples/bach.aiff")]
+    (pan2 (play-buf 1 buffer :action FREE :rate 0.5) pan)))
 
 (defn book [initial]
   (({coding/G godel
