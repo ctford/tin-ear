@@ -64,8 +64,8 @@
          ;(with alt)
          (where :pitch (comp B minor))
          (with
-           (->> (map coding/char->ascii "GEB")
-                (phrase [7/2 7/2 14/2])
+           (->> (map coding/char->ascii "GEB") ; Play ascii codes as though
+                (phrase [7/2 7/2 14/2])        ; they are midi pitches
                 ))
          (tempo (bpm 100)))))
 
