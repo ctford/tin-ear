@@ -131,17 +131,23 @@
 (definst godel []
   (let [pan -1.0
         buffer (load-sample "samples/goedel.aiff")]
-    (pan2 (play-buf 1 buffer :action FREE :rate 0.5) pan)))
+    (-> (play-buf 1 buffer :action FREE :rate 0.5)
+        (pan2 pan)
+        (* 5))))
 
 (definst escher []
   (let [pan 1.0
         buffer (load-sample "samples/escher.aiff")]
-    (pan2 (play-buf 1 buffer :action FREE :rate 0.5) pan)))
+    (-> (play-buf 1 buffer :action FREE :rate 0.5)
+        (pan2 pan)
+        (* 5))))
 
 (definst bach []
   (let [pan 0.0
         buffer (load-sample "samples/bach.aiff")]
-    (pan2 (play-buf 1 buffer :action FREE :rate 0.5) pan)))
+    (-> (play-buf 1 buffer :action FREE :rate 0.5)
+        (pan2 pan)
+        (* 5))))
 
 (defn book [initial]
   (({coding/G godel
