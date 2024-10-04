@@ -1,24 +1,18 @@
-(ns sn.in-the-mood.song
+(ns sn.in-the-mood.in-the-mood
   (:use leipzig.scale, leipzig.melody, leipzig.live, leipzig.chord, leipzig.temperament
         [overtone.live :only []]
         [overtone.inst.piano :only [piano]]
         [overtone.inst.drum :refer :all]))
 
 (def in-the-mood
-  []
-  )
+  (->> []
+       (where :pitch (comp low B flat major))
+       (tempo (bpm 120))))
 
 (comment
   (-> in-the-mood var jam)
   (def in-the-mood nil)
 )
-
-
-
-
-
-
-
 
 (defmethod play-note :beat [_]
   (closed-hat2 :amp 1.0))
